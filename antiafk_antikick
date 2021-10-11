@@ -1,0 +1,24 @@
+-- Anti Afk
+
+game:GetService("Players").LocalPlayer.Idled:Connect(function()
+   local vu = game:GetService("VirtualUser")
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(.5)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   print("Bypassed afk timeout kick at " .. tostring(os.date("%I" .. ":" .. "%M" .. ":" .. "%S" .. " " .. "%p")))
+end)
+
+-- Anti Kick
+
+local get = getrawmetatable(game)
+local oldnamecall = get.__namecall
+
+setreadonly(get, false)
+
+get.__namecall = newcclosure(function(Self,...)
+    local method = getnamecallmethod()
+    if Self == game.Players.LocalPlayer and tostring(method) == "Kick" then
+        return
+    end
+    return oldnamecall(Self,...)
+end)
