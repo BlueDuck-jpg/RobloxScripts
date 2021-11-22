@@ -173,7 +173,7 @@ tab:Toggle("Kill All", function(t)
                     firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 0)
                     wait()
                     firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 1)
-                    wait()
+                    wait(.2)
                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
                 end
                 for i,v in ipairs(game.Players:GetPlayers()) do
@@ -201,7 +201,7 @@ tab:Button("Kill Player", function()
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 0)
             wait()
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 1)
-            wait()
+            wait(.2)
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
         end
         repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
