@@ -27,6 +27,7 @@ getgenv().buy = false
 getgenv().owneronly = false
 getgenv().walkspeed = false
 getgenv().killall = false
+getgenv().loopkill = false
 
 -- Anti Kick & Anti AFK
 local cool, bruh = pcall(function()
@@ -113,14 +114,16 @@ tab:Toggle("Spam Tycoon's Laser (IF HAVE LASER DOOR)", function(t)
     end)
 end)
 
-tab:Button("Remove all lasers", function(t)
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v.Name == "OwnerOnlyDoor" then
-            if v.Parent.Parent.Name ~= tostring(game.Players.LocalPlayer.Team) then
-                v:Destroy() 
+tab:Button("Remove all lasers", function()
+    spawn(function()
+        for i,v in pairs(workspace:GetDescendants()) do
+            if v.Name == "OwnerOnlyDoor" then
+                if v.Parent.Parent.Name ~= tostring(game.Players.LocalPlayer.Team) then
+                    v:Destroy() 
+                end
             end
         end
-    end
+    end)
 end)
 
 tab:Toggle("2x WalkSpeed (Re-Enable if die)", function(t)
@@ -173,12 +176,13 @@ tab:Toggle("Kill All", function(t)
                     firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 0)
                     wait()
                     firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 1)
-                    wait(.2)
+                    wait(.5)
                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
                 end
+                wait(.6)
                 for i,v in ipairs(game.Players:GetPlayers()) do
                     if v ~= game.Players.LocalPlayer then
-                        repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
+                        repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or not getgenv().killall
                     end
                 end 
             end
@@ -201,13 +205,45 @@ tab:Button("Kill Player", function()
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 0)
             wait()
             firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 1)
-            wait(.2)
+            wait(.5)
             game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
         end
+        wait(.6)
         repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
     else
         createNotification("ERROR!", "Can't find player.", 2.5)
     end
+end)
+
+local a = 1
+tab:Toggle("Loop Kill Player", function(t)
+    getgenv().loopkill = t
+    spawn(function()
+        while wait() do
+            if getgenv().loopkill then
+                local findplayer = game.Players:FindFirstChild(PlayerName)
+                if findplayer then
+                    local v = findplayer
+                    if game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword") then
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
+                    else
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 0)
+                        wait()
+                        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, workspace.Tycoons.Tycoons:FindFirstChild("WeaponGiver1", true).Model.Main, 1)
+                        wait(.5)
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
+                    end
+                    wait(.6)
+                    repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or not getgenv().loopkill
+                else
+                    if a == 1 then
+                        createNotification("ERROR!", "Can't find player.", 2.5)
+                        a = a + 1
+                    end
+                end
+            end
+        end
+    end)
 end)
 
 -- Theme
