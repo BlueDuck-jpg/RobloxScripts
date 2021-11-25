@@ -33,6 +33,35 @@ getgenv().walkspeed = false
 getgenv().killall = false
 getgenv().loop = false
 
+-- Anti Kick & Anti AFK
+local cool, bruh = pcall(function()
+    -- Anti Afk
+    local bb=game:service'VirtualUser'
+    game:service'Players'.LocalPlayer.Idled:connect(function()
+        bb:CaptureController()bb:ClickButton2(Vector2.new())
+    end)
+
+    -- Anti Kick
+    local get = getrawmetatable(game)
+    local oldnamecall = get.__namecall
+    
+    setreadonly(get, false)
+    
+    get.__namecall = newcclosure(function(Self,...)
+        local method = getnamecallmethod()
+        if Self == game.Players.LocalPlayer and tostring(method) == "Kick" then
+            return
+        end
+        return oldnamecall(Self,...)
+    end)
+end)
+
+if cool then
+    createNotification("Success!", "Successfully bypassed kick and afk timeout kick!", 5)
+else
+    createNotification("Error!", "There was an error when trying to bypass kick and afk timeout!", 5)
+end
+
 -- Script
 
 tab:Toggle("Auto Collect", function(t)
@@ -141,7 +170,7 @@ tab:Toggle("Loop Kill Player", function(t)
                 local v = game.Players:FindFirstChild(PlayerName)
                 if v then
                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
-                    repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
+                    repeat wait() game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
                 else
                     if not a then
                         createNotification("ERROR!", "Can't find player!", 5)
