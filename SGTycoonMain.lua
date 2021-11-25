@@ -138,7 +138,7 @@ tab:Toggle("Kill All", function(t)
                 game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
                 for i,v in ipairs(game.Players:GetPlayers()) do
                     if v ~= game.Players.LocalPlayer then
-                        repeat wait() game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or not getgenv().killall
+                        repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) wait() game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) until v.Character.Humanoid.Health <= 0 or not getgenv().killall
                     end
                 end
             end
@@ -170,7 +170,7 @@ tab:Toggle("Loop Kill Player", function(t)
                 local v = game.Players:FindFirstChild(PlayerName)
                 if v then
                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
-                    repeat wait() game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0
+                    repeat wait() game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) wait() game.Players.LocalPlayer.Character:WaitForChild("Humanoid"):EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) until v.Character.Humanoid.Health <= 0 or not getgenv().loop
                 else
                     if not a then
                         createNotification("ERROR!", "Can't find player!", 5)
