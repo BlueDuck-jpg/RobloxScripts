@@ -170,7 +170,7 @@ tab:Toggle("Loop Kill Player", function(t)
                 local v = game.Players:FindFirstChild(PlayerName)
                 if v then
                     game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword"))
-                    repeat wait() game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0 or game.Players.LocalPlayer.Character.Humanoid.Health == 0
+                    repeat wait() game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild("ClassicSword")) game.Players.LocalPlayer.Character:PivotTo(v.Character:GetPivot()) until v.Character.Humanoid.Health <= 0
                 else
                     if not a then
                         createNotification("ERROR!", "Can't find player!", 5)
