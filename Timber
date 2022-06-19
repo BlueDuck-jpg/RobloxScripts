@@ -50,7 +50,7 @@ Main:Toggle("Auto Chop", "Automatically hit trees for you", false, "AHT", functi
     Plot = nil
     for i,v in pairs(workspace.Plots:GetChildren()) do
         for i,d in pairs(v:GetChildren()) do
-            if d.Name == "Owner" and d:IsA("ObjectValue") then
+            if d.Name == "Owner" and d:IsA("ObjectValue") and d.Value == game.Players.LocalPlayer.Name then
                 Plot = d.Parent.Name
             end
         end
